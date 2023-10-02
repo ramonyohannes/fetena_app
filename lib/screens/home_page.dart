@@ -12,32 +12,50 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  int questionIndex = 0;
+  int totalScore = 0;
+
   final List questions = [
     {
       "question": "What is your favorite food?",
-      "answer": ["Doro", "Firfir", "Tbs", "Kitfo"]
+      "answer": [
+        {"text": "Doro", "score": 1},
+        {"text": "Firfir", "score": 2},
+        {"text": "Tbs", "score": 3},
+        {"text": "Kitfo", "score": 4}
+      ]
     },
     {
       "question": "What is your favorite drink?",
-      "answer": ["Ambo", "Water", "Beer", "Wine"]
+      "answer": [
+        {"text": "Ambo", "score": 1},
+        {"text": "Water", "score": 2},
+        {"text": "Beer", "score": 3},
+        {"text": "Wine", "score": 4}
+      ]
     },
     {
       "question": "Who is your favorite dog?",
-      "answer": ["Mika", "Poni", "Amigo", "Lucy"]
+      "answer": [
+        {"text": "Mika", "score": 1},
+        {"text": "Poni", "score": 1},
+        {"text": "Amigo", "score": 3},
+        {"text": "Lucy", "score": 4}
+      ]
     },
   ];
 
-  int questionIndex = 0;
-
-  void changeQuestionIndex() {
+  void changeQuestionIndex(int score) {
     setState(() {
       questionIndex = questionIndex + 1;
+      totalScore = totalScore + score;
     });
   }
 
-  void restartQuestion() {
+  void restartQuiz() {
     setState(() {
       questionIndex = 0;
+      totalScore = 0;
     });
   }
 
@@ -57,7 +75,7 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       body: questionIndex >= questions.length
-          ? Restart(restartQuestion)
+          ? Restart(restartQuiz, totalScore)
           : Center(
               child: Column(
                 children: [

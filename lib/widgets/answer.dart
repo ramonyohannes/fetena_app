@@ -15,9 +15,9 @@ class Answer extends StatelessWidget {
           return SizedBox(
             width: double.infinity,
             child: ElevatedButton(
-              onPressed: () => changeQuestionIndex(),
+              onPressed: () => changeQuestionIndex(questionText["score"]),
               child: Text(
-                questionText,
+                questionText["text"],
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 15,
