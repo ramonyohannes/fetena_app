@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+import '../widgets/questions.dart';
+import '../widgets/answer.dart';
+import '../widgets/restart.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -31,6 +35,12 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  void restartQuestion() {
+    setState(() {
+      questionIndex = 0;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,40 +56,16 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
-      body: Center(
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: Text(
-                questions[questionIndex]["question"],
-                style: const TextStyle(
-                  fontSize: 25,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
+      body: questionIndex >= questions.length
+          ? Restart(restartQuestion)
+          : Center(
+              child: Column(
+                children: [
+                  Questions(questions, questionIndex),
+                  Answer(questions, questionIndex, changeQuestionIndex),
+                ],
               ),
             ),
-            ...questions[questionIndex]["answer"].map(
-              (questionText) {
-                return SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () => changeQuestionIndex(),
-                    child: Text(
-                      questionText,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 15,
-                      ),
-                    ),
-                  ),
-                );
-              },
-            )
-          ],
-        ),
-      ),
     );
   }
 }
