@@ -1,7 +1,35 @@
 import 'package:flutter/material.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  final List questions = [
+    {
+      "question": "What is your favorite food?",
+      "answer": ["Doro", "Firfir", "Tbs", "Kitfo"]
+    },
+    {
+      "question": "What is your favorite drink?",
+      "answer": ["Ambo", "Water", "Beer", "Wine"]
+    },
+    {
+      "question": "Who is your favorite dog?",
+      "answer": ["Mika", "Poni", "Amigo", "Lucy"]
+    },
+  ];
+
+  int questionIndex = 0;
+
+  void changeQuestionIndex() {
+    setState(() {
+      questionIndex = questionIndex + 1;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,28 +49,33 @@ class HomePage extends StatelessWidget {
       body: Center(
         child: Column(
           children: [
-            const Padding(
-              padding: EdgeInsets.all(15.0),
+            Padding(
+              padding: const EdgeInsets.all(15.0),
               child: Text(
-                "What is your favorite food?",
-                style: TextStyle(
+                questions[questionIndex]["question"],
+                style: const TextStyle(
                   fontSize: 25,
                   fontWeight: FontWeight.bold,
                   color: Colors.black,
                 ),
               ),
             ),
-            ElevatedButton(
-              onPressed: () {},
-              child: const Text("Button 1"),
-            ),
-            ElevatedButton(
-              onPressed: () {},
-              child: const Text("Button 1"),
-            ),
-            ElevatedButton(
-              onPressed: () {},
-              child: const Text("Button 1"),
+            ...questions[questionIndex]["answer"].map(
+              (questionText) {
+                return SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () => changeQuestionIndex(),
+                    child: Text(
+                      questionText,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15,
+                      ),
+                    ),
+                  ),
+                );
+              },
             )
           ],
         ),
